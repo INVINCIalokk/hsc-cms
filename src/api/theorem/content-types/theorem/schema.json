@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "theorems",
+  "info": {
+    "singularName": "theorem",
+    "pluralName": "theorems",
+    "displayName": "Theorem"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Ttitle": {
+      "type": "string"
+    },
+    "Proof": {
+      "type": "blocks"
+    },
+    "Diagram": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Statement": {
+      "type": "blocks"
+    },
+    "chapter": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::chapter.chapter",
+      "inversedBy": "theorems"
+    }
+  }
+}

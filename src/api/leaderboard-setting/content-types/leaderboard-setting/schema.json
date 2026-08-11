@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "leaderboard_settings",
+  "info": {
+    "singularName": "leaderboard-setting",
+    "pluralName": "leaderboard-settings",
+    "displayName": "LeaderboardSetting"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "batch": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::batch.batch"
+    }
+  }
+}

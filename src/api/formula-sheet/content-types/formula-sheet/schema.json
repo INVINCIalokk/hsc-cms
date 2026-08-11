@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "formula_sheets",
+  "info": {
+    "singularName": "formula-sheet",
+    "pluralName": "formula-sheets",
+    "displayName": "Formula Sheet"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Content": {
+      "type": "blocks"
+    },
+    "Attachment": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "chapter": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::chapter.chapter",
+      "inversedBy": "formula_sheet"
+    },
+    "Description": {
+      "type": "text"
+    }
+  }
+}

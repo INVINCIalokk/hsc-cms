@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "standards",
+  "info": {
+    "singularName": "standard",
+    "pluralName": "standards",
+    "displayName": "Standard"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Level": {
+      "type": "integer"
+    },
+    "board": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::board.board",
+      "inversedBy": "standards"
+    },
+    "subjects": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::subject.subject",
+      "mappedBy": "standard"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "standard"
+    }
+  }
+}

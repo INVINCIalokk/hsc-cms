@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chapters",
+  "info": {
+    "singularName": "chapter",
+    "pluralName": "chapters",
+    "displayName": "Chapter"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Chapter_Number": {
+      "type": "integer"
+    },
+    "Description": {
+      "type": "blocks"
+    },
+    "subject": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::subject.subject",
+      "inversedBy": "chapters"
+    },
+    "exercises": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::exercise.exercise",
+      "mappedBy": "chapter"
+    },
+    "theorems": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::theorem.theorem",
+      "mappedBy": "chapter"
+    },
+    "questions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::question.question",
+      "mappedBy": "chapter"
+    },
+    "formula_sheet": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::formula-sheet.formula-sheet",
+      "mappedBy": "chapter"
+    },
+    "revision_deck": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::revision-deck.revision-deck",
+      "inversedBy": "chapter"
+    }
+  }
+}

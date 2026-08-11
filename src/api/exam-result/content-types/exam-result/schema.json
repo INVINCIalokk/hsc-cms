@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "exam_results",
+  "info": {
+    "singularName": "exam-result",
+    "pluralName": "exam-results",
+    "displayName": "ExamResult"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "obtained_marks": {
+      "type": "decimal"
+    },
+    "remarks": {
+      "type": "enumeration",
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "exam_results"
+    },
+    "exam": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::exam.exam",
+      "inversedBy": "exam_results"
+    }
+  }
+}

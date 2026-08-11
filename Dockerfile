@@ -1,0 +1,17 @@
+# Stage 1: Build Strapi app
+FROM node:20-alpine AS build
+RUN apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev > /dev/null 2>&1
+WORKDIR /opt/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Stage 2: Production Runtime
+FROM node:20-alpine
+RUN apk add --no-cache vips-dev
+WORKDIR /opt/app
+COPY --from=build /opt/app ./
+EXPOSE 1337
+ENV NODE_ENV=production
+CMD ["npm", "run", "start"]

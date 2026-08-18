@@ -1,0 +1,68 @@
+{
+  "kind": "collectionType",
+  "collectionName": "question_papers",
+  "info": {
+    "singularName": "question-paper",
+    "pluralName": "question-papers",
+    "displayName": "QuestionPaper",
+    "description": "Question Paper Blueprint containing ordered questions"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "type": {
+      "type": "enumeration",
+      "default": "theory",
+      "enum": [
+        "theory",
+        "entrance"
+      ]
+    },
+    "total_marks": {
+      "type": "decimal"
+    },
+    "passing_marks": {
+      "type": "decimal"
+    },
+    "duration_minutes": {
+      "type": "integer"
+    },
+    "instructions": {
+      "type": "blocks"
+    },
+    "show_solutions_after_exam": {
+      "type": "boolean",
+      "default": true
+    },
+    "solution_release_time": {
+      "type": "datetime"
+    },
+    "paper_questions": {
+      "type": "component",
+      "component": "paper.paper-question-entry",
+      "repeatable": true
+    },
+    "exams": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::exam.exam",
+      "mappedBy": "question_paper"
+    },
+    "batches": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::batch.batch",
+      "mappedBy": "question_paper"
+    }
+  }
+}

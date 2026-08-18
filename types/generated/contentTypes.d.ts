@@ -460,6 +460,10 @@ export interface ApiBatchBatch extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    question_paper: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::question-paper.question-paper'
+    >;
     schedules: Schema.Attribute.Relation<'oneToMany', 'api::schedule.schedule'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -547,6 +551,7 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
 export interface ApiExamResultExamResult extends Struct.CollectionTypeSchema {
   collectionName: 'exam_results';
   info: {
+    description: 'Student attempt records, evaluation details, and lock security status for exams';
     displayName: 'ExamResult';
     pluralName: 'exam-results';
     singularName: 'exam-result';
@@ -555,19 +560,34 @@ export interface ApiExamResultExamResult extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    accuracy_percentage: Schema.Attribute.Decimal;
+    correct_count: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     exam: Schema.Attribute.Relation<'manyToOne', 'api::exam.exam'>;
+    exam_result_status: Schema.Attribute.Enumeration<
+      ['in_progress', 'submitted', 'evaluated']
+    > &
+      Schema.Attribute.DefaultTo<'in_progress'>;
+    incorrect_count: Schema.Attribute.Integer;
+    is_locked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::exam-result.exam-result'
     > &
       Schema.Attribute.Private;
+    lock_reason: Schema.Attribute.String;
     obtained_marks: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
     remarks: Schema.Attribute.Enumeration<['PASS', 'FAIL']>;
+    responses: Schema.Attribute.JSON;
+    start_time: Schema.Attribute.DateTime;
+    submit_time: Schema.Attribute.DateTime;
+    tab_switch_count: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    total_marks: Schema.Attribute.Decimal;
+    unattempted_count: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -581,6 +601,7 @@ export interface ApiExamResultExamResult extends Struct.CollectionTypeSchema {
 export interface ApiExamExam extends Struct.CollectionTypeSchema {
   collectionName: 'exams';
   info: {
+    description: 'Scheduled exam instance linked to a question paper and batch';
     displayName: 'Exam';
     pluralName: 'exams';
     singularName: 'exam';
@@ -594,14 +615,26 @@ export interface ApiExamExam extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     date: Schema.Attribute.Date;
+    duration_minutes: Schema.Attribute.Integer;
+    end_time: Schema.Attribute.DateTime;
     exam_results: Schema.Attribute.Relation<
       'oneToMany',
       'api::exam-result.exam-result'
     >;
+    exam_status: Schema.Attribute.Enumeration<
+      ['inactive', 'active', 'completed']
+    > &
+      Schema.Attribute.DefaultTo<'inactive'>;
+    instructions: Schema.Attribute.Blocks;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::exam.exam'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    question_paper: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::question-paper.question-paper'
+    >;
+    start_time: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     total_marks: Schema.Attribute.Integer;
     type: Schema.Attribute.Enumeration<['theory', 'entrance']> &
@@ -711,9 +744,56 @@ export interface ApiLeaderboardSettingLeaderboardSetting
   };
 }
 
+export interface ApiQuestionPaperQuestionPaper
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'question_papers';
+  info: {
+    description: 'Question Paper Blueprint containing ordered questions';
+    displayName: 'QuestionPaper';
+    pluralName: 'question-papers';
+    singularName: 'question-paper';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    batches: Schema.Attribute.Relation<'oneToMany', 'api::batch.batch'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    duration_minutes: Schema.Attribute.Integer;
+    exams: Schema.Attribute.Relation<'oneToMany', 'api::exam.exam'>;
+    instructions: Schema.Attribute.Blocks;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::question-paper.question-paper'
+    > &
+      Schema.Attribute.Private;
+    paper_questions: Schema.Attribute.Component<
+      'paper.paper-question-entry',
+      true
+    >;
+    passing_marks: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    show_solutions_after_exam: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    slug: Schema.Attribute.UID<'title'>;
+    solution_release_time: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    total_marks: Schema.Attribute.Decimal;
+    type: Schema.Attribute.Enumeration<['theory', 'entrance']> &
+      Schema.Attribute.DefaultTo<'theory'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
   collectionName: 'questions';
   info: {
+    description: 'Question bank supporting both Theoretical and MCQ questions for Exercises, Tests, Entrance Exams, and Practice';
     displayName: 'Question';
     pluralName: 'questions';
     singularName: 'question';
@@ -726,6 +806,10 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    default_marks: Schema.Attribute.Decimal;
+    default_negative_marks: Schema.Attribute.Decimal;
+    difficulty: Schema.Attribute.Enumeration<['easy', 'medium', 'hard']> &
+      Schema.Attribute.DefaultTo<'medium'>;
     exercise: Schema.Attribute.Relation<'manyToOne', 'api::exercise.exercise'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -733,12 +817,25 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
       'api::question.question'
     > &
       Schema.Attribute.Private;
+    mcq_options: Schema.Attribute.Component<'question.mcq-option', true>;
     publishedAt: Schema.Attribute.DateTime;
+    question_category: Schema.Attribute.Enumeration<
+      ['theory', 'entrance', 'both']
+    > &
+      Schema.Attribute.DefaultTo<'theory'>;
+    question_format: Schema.Attribute.Enumeration<['mcq', 'theoretical']> &
+      Schema.Attribute.DefaultTo<'mcq'>;
+    question_image: Schema.Attribute.Media<'images'>;
     Question_number: Schema.Attribute.String;
     Question_Text: Schema.Attribute.Blocks;
     Question_Type: Schema.Attribute.Enumeration<['Standard', 'Extra']> &
       Schema.Attribute.DefaultTo<'Standard'>;
+    single_or_multiple_correct: Schema.Attribute.Enumeration<
+      ['single_correct', 'multiple_correct']
+    > &
+      Schema.Attribute.DefaultTo<'single_correct'>;
     Solution: Schema.Attribute.Blocks;
+    solution_video_url: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1470,6 +1567,7 @@ declare module '@strapi/strapi' {
       'api::exercise.exercise': ApiExerciseExercise;
       'api::formula-sheet.formula-sheet': ApiFormulaSheetFormulaSheet;
       'api::leaderboard-setting.leaderboard-setting': ApiLeaderboardSettingLeaderboardSetting;
+      'api::question-paper.question-paper': ApiQuestionPaperQuestionPaper;
       'api::question.question': ApiQuestionQuestion;
       'api::resource.resource': ApiResourceResource;
       'api::revision-deck.revision-deck': ApiRevisionDeckRevisionDeck;

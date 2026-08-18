@@ -4,7 +4,8 @@
   "info": {
     "singularName": "exam-result",
     "pluralName": "exam-results",
-    "displayName": "ExamResult"
+    "displayName": "ExamResult",
+    "description": "Student attempt records, evaluation details, and lock security status for exams"
   },
   "options": {
     "draftAndPublish": true
@@ -13,6 +14,50 @@
   "attributes": {
     "obtained_marks": {
       "type": "decimal"
+    },
+    "total_marks": {
+      "type": "decimal"
+    },
+    "correct_count": {
+      "type": "integer"
+    },
+    "incorrect_count": {
+      "type": "integer"
+    },
+    "unattempted_count": {
+      "type": "integer"
+    },
+    "accuracy_percentage": {
+      "type": "decimal"
+    },
+    "start_time": {
+      "type": "datetime"
+    },
+    "submit_time": {
+      "type": "datetime"
+    },
+    "exam_result_status": {
+      "type": "enumeration",
+      "default": "in_progress",
+      "enum": [
+        "in_progress",
+        "submitted",
+        "evaluated"
+      ]
+    },
+    "is_locked": {
+      "type": "boolean",
+      "default": false
+    },
+    "tab_switch_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "lock_reason": {
+      "type": "string"
+    },
+    "responses": {
+      "type": "json"
     },
     "remarks": {
       "type": "enumeration",

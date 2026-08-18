@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_exam_result_question_responses",
+  "info": {
+    "displayName": "question_response",
+    "icon": "check",
+    "description": "Component for storing user question responses and evaluation"
+  },
+  "options": {},
+  "attributes": {
+    "question": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::question.question"
+    },
+    "selected_option": {
+      "type": "string"
+    },
+    "tita_answer": {
+      "type": "string"
+    },
+    "obtained_marks": {
+      "type": "decimal"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "correct",
+        "incorrect",
+        "unattempted",
+        "pending_evaluation"
+      ],
+      "default": "unattempted"
+    },
+    "admin_feedback": {
+      "type": "text"
+    }
+  }
+}

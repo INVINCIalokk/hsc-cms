@@ -4,7 +4,8 @@
   "info": {
     "singularName": "exam",
     "pluralName": "exams",
-    "displayName": "Exam"
+    "displayName": "Exam",
+    "description": "Scheduled exam instance linked to a question paper and batch"
   },
   "options": {
     "draftAndPublish": true
@@ -17,16 +18,37 @@
     "date": {
       "type": "date"
     },
+    "start_time": {
+      "type": "datetime"
+    },
+    "end_time": {
+      "type": "datetime"
+    },
+    "duration_minutes": {
+      "type": "integer"
+    },
+    "exam_status": {
+      "type": "enumeration",
+      "default": "inactive",
+      "enum": [
+        "inactive",
+        "active",
+        "completed"
+      ]
+    },
     "total_marks": {
       "type": "integer"
     },
+    "instructions": {
+      "type": "blocks"
+    },
     "type": {
       "type": "enumeration",
+      "default": "theory",
       "enum": [
         "theory",
         "entrance"
-      ],
-      "default": "theory"
+      ]
     },
     "batch": {
       "type": "relation",
@@ -39,6 +61,12 @@
       "relation": "oneToMany",
       "target": "api::exam-result.exam-result",
       "mappedBy": "exam"
+    },
+    "question_paper": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::question-paper.question-paper",
+      "inversedBy": "exams"
     }
   }
 }

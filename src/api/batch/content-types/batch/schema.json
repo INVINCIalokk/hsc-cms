@@ -31,6 +31,12 @@
       "relation": "oneToMany",
       "target": "api::schedule.schedule",
       "mappedBy": "batch"
+    },
+    "question_paper": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::question-paper.question-paper",
+      "inversedBy": "batches"
     }
   }
 }

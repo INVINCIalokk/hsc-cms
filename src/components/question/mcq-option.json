@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_question_mcq_options",
+  "info": {
+    "displayName": "mcq_option",
+    "icon": "list-ol",
+    "description": "MCQ Option component with text, image, correctness, and explanation"
+  },
+  "options": {},
+  "attributes": {
+    "option_key": {
+      "type": "string",
+      "required": true
+    },
+    "option_text": {
+      "type": "blocks"
+    },
+    "option_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "is_correct": {
+      "type": "boolean",
+      "default": false
+    },
+    "explanation": {
+      "type": "blocks"
+    }
+  }
+}

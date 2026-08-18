@@ -4,7 +4,8 @@
   "info": {
     "singularName": "question",
     "pluralName": "questions",
-    "displayName": "Question"
+    "displayName": "Question",
+    "description": "Question bank supporting both Theoretical and MCQ questions for Exercises, Tests, Entrance Exams, and Practice"
   },
   "options": {
     "draftAndPublish": true
@@ -17,8 +18,64 @@
     "Question_Text": {
       "type": "blocks"
     },
+    "question_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "question_format": {
+      "type": "enumeration",
+      "enum": [
+        "mcq",
+        "theoretical"
+      ],
+      "default": "mcq"
+    },
+    "question_category": {
+      "type": "enumeration",
+      "enum": [
+        "theory",
+        "entrance",
+        "both"
+      ],
+      "default": "theory"
+    },
+    "difficulty": {
+      "type": "enumeration",
+      "enum": [
+        "easy",
+        "medium",
+        "hard"
+      ],
+      "default": "medium"
+    },
+    "default_marks": {
+      "type": "decimal"
+    },
+    "default_negative_marks": {
+      "type": "decimal"
+    },
     "Solution": {
       "type": "blocks"
+    },
+    "solution_video_url": {
+      "type": "string"
+    },
+    "mcq_options": {
+      "type": "component",
+      "repeatable": true,
+      "component": "question.mcq-option"
+    },
+    "single_or_multiple_correct": {
+      "type": "enumeration",
+      "enum": [
+        "single_correct",
+        "multiple_correct"
+      ],
+      "default": "single_correct"
     },
     "Question_Type": {
       "type": "enumeration",

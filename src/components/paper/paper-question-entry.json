@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_paper_paper_question_entries",
+  "info": {
+    "displayName": "paper_question_entry",
+    "icon": "bulletList",
+    "description": "Bridge component linking a question to a question paper with order and mark overrides"
+  },
+  "options": {},
+  "attributes": {
+    "question": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::question.question"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "section_title": {
+      "type": "string"
+    },
+    "marks_override": {
+      "type": "decimal"
+    },
+    "negative_marks_override": {
+      "type": "decimal"
+    }
+  }
+}

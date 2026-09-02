@@ -12,6 +12,12 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "exam_results"
+    },
     "obtained_marks": {
       "type": "decimal"
     },
@@ -65,12 +71,6 @@
         "PASS",
         "FAIL"
       ]
-    },
-    "users_permissions_user": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "exam_results"
     },
     "exam": {
       "type": "relation",

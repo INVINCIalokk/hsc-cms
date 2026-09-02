@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "practice_sections",
+  "info": {
+    "singularName": "practice-section",
+    "pluralName": "practice-sections",
+    "displayName": "Practice Section",
+    "description": "Chapter practice question section with mapped practice questions"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "default": "Practice Questions"
+    },
+    "Description": {
+      "type": "blocks"
+    },
+    "chapter": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::chapter.chapter",
+      "inversedBy": "practice_section"
+    },
+    "questions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::question.question",
+      "mappedBy": "practice_section"
+    }
+  }
+}

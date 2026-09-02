@@ -18,7 +18,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::chapter.chapter",
-      "mappedBy": "revision_deck"
+      "inversedBy": "revision_deck"
     },
     "cards": {
       "type": "media",

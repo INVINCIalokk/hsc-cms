@@ -59,7 +59,7 @@ export interface QuestionMcqOption extends Struct.ComponentSchema {
   attributes: {
     explanation: Schema.Attribute.Blocks;
     is_correct: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    option_image: Schema.Attribute.Media<'images'>;
+    option_image: Schema.Attribute.Media<'images' | 'files'>;
     option_key: Schema.Attribute.String & Schema.Attribute.Required;
     option_text: Schema.Attribute.Blocks;
   };

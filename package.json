@@ -17,7 +17,9 @@
   "dependencies": {
     "@strapi/plugin-cloud": "5.49.0",
     "@strapi/plugin-users-permissions": "5.49.0",
+    "@strapi/provider-upload-aws-s3": "^5.52.2",
     "@strapi/strapi": "5.49.0",
+    "approve": "^0.0.12",
     "better-sqlite3": "12.8.0",
     "pg": "^8.22.0",
     "react": "^18.0.0",
@@ -32,5 +34,8 @@
   "strapi": {
     "uuid": "3629b656-3ec7-4e3d-945d-1895c192fd02",
     "installId": "e28fd0877aef724f55d0e91df3c91da962e107ae4db33ae7e1b113eae7eced2e"
+  },
+  "allowScripts": {
+    "@strapi/provider-upload-aws-s3@5.52.2": true
   }
 }

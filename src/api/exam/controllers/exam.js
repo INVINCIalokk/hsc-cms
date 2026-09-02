@@ -228,7 +228,7 @@ module.exports = createCoreController("api::exam.exam", ({ strapi }) => ({
           paper_questions: {
             populate: {
               question: {
-                populate: ["mcq_options", "question_image"],
+                populate: ["mcq_options", "question_image", "solution_image"],
               },
             },
           },
@@ -280,7 +280,7 @@ module.exports = createCoreController("api::exam.exam", ({ strapi }) => ({
         const q = entry.question;
         if (!q) return entry;
 
-        const { Solution, solution_video_url, ...safeQuestion } = q;
+        const { Solution, solution_video_url, solution_image, ...safeQuestion } = q;
 
         if (Array.isArray(safeQuestion.mcq_options)) {
           safeQuestion.mcq_options = safeQuestion.mcq_options.map((opt) => {

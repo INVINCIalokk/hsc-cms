@@ -54,7 +54,13 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::revision-deck.revision-deck",
-      "inversedBy": "chapter"
+      "mappedBy": "chapter"
+    },
+    "practice_section": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::practice-section.practice-section",
+      "mappedBy": "chapter"
     }
   }
 }

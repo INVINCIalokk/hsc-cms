@@ -533,6 +533,10 @@ export interface ApiChapterChapter extends Struct.CollectionTypeSchema {
       'api::chapter.chapter'
     > &
       Schema.Attribute.Private;
+    practice_section: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::practice-section.practice-section'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     questions: Schema.Attribute.Relation<'oneToMany', 'api::question.question'>;
     revision_deck: Schema.Attribute.Relation<
@@ -744,6 +748,40 @@ export interface ApiLeaderboardSettingLeaderboardSetting
   };
 }
 
+export interface ApiPracticeSectionPracticeSection
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'practice_sections';
+  info: {
+    description: 'Chapter practice question section with mapped practice questions';
+    displayName: 'Practice Section';
+    pluralName: 'practice-sections';
+    singularName: 'practice-section';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    chapter: Schema.Attribute.Relation<'oneToOne', 'api::chapter.chapter'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Description: Schema.Attribute.Blocks;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::practice-section.practice-section'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    questions: Schema.Attribute.Relation<'oneToMany', 'api::question.question'>;
+    Title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Practice Questions'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiQuestionPaperQuestionPaper
   extends Struct.CollectionTypeSchema {
   collectionName: 'question_papers';
@@ -818,6 +856,10 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     mcq_options: Schema.Attribute.Component<'question.mcq-option', true>;
+    practice_section: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::practice-section.practice-section'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     question_category: Schema.Attribute.Enumeration<
       ['theory', 'entrance', 'both']
@@ -825,7 +867,7 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<'theory'>;
     question_format: Schema.Attribute.Enumeration<['mcq', 'theoretical']> &
       Schema.Attribute.DefaultTo<'mcq'>;
-    question_image: Schema.Attribute.Media<'images'>;
+    question_image: Schema.Attribute.Media<'images' | 'files'>;
     Question_number: Schema.Attribute.String;
     Question_Text: Schema.Attribute.Blocks;
     Question_Type: Schema.Attribute.Enumeration<['Standard', 'Extra']> &
@@ -835,6 +877,7 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.DefaultTo<'single_correct'>;
     Solution: Schema.Attribute.Blocks;
+    solution_image: Schema.Attribute.Media<'images' | 'files'>;
     solution_video_url: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1567,6 +1610,7 @@ declare module '@strapi/strapi' {
       'api::exercise.exercise': ApiExerciseExercise;
       'api::formula-sheet.formula-sheet': ApiFormulaSheetFormulaSheet;
       'api::leaderboard-setting.leaderboard-setting': ApiLeaderboardSettingLeaderboardSetting;
+      'api::practice-section.practice-section': ApiPracticeSectionPracticeSection;
       'api::question-paper.question-paper': ApiQuestionPaperQuestionPaper;
       'api::question.question': ApiQuestionQuestion;
       'api::resource.resource': ApiResourceResource;

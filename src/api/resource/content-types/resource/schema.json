@@ -4,7 +4,8 @@
   "info": {
     "singularName": "resource",
     "pluralName": "resources",
-    "displayName": "Resource"
+    "displayName": "Resource",
+    "description": "Hierarchical folder and resource link/file structure"
   },
   "options": {
     "draftAndPublish": true
@@ -12,33 +13,43 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
-    },
-    "url": {
       "type": "string",
-      "conditions": {
-        "visible": {
-          "==": [
-            {
-              "var": "type"
-            },
-            "link"
-          ]
-        }
-      },
-      "required": false
+      "required": true
     },
     "type": {
       "type": "enumeration",
       "enum": [
-        "link",
-        "folder"
+        "folder",
+        "link"
+      ],
+      "default": "folder",
+      "required": true
+    },
+    "url": {
+      "type": "string"
+    },
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
       ]
     },
-    "resource": {
+    "parent": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::resource.resource"
+      "relation": "manyToOne",
+      "target": "api::resource.resource",
+      "inversedBy": "children"
+    },
+    "children": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::resource.resource",
+      "mappedBy": "parent"
     }
   }
 }

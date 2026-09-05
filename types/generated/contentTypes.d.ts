@@ -888,6 +888,7 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
 export interface ApiResourceResource extends Struct.CollectionTypeSchema {
   collectionName: 'resources';
   info: {
+    description: 'Hierarchical folder and resource link/file structure';
     displayName: 'Resource';
     pluralName: 'resources';
     singularName: 'resource';
@@ -896,19 +897,23 @@ export interface ApiResourceResource extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    children: Schema.Attribute.Relation<'oneToMany', 'api::resource.resource'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    file: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::resource.resource'
     > &
       Schema.Attribute.Private;
+    parent: Schema.Attribute.Relation<'manyToOne', 'api::resource.resource'>;
     publishedAt: Schema.Attribute.DateTime;
-    resource: Schema.Attribute.Relation<'oneToOne', 'api::resource.resource'>;
-    title: Schema.Attribute.String;
-    type: Schema.Attribute.Enumeration<['link', 'folder']>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    type: Schema.Attribute.Enumeration<['folder', 'link']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'folder'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
